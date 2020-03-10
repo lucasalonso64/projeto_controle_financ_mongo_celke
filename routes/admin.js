@@ -24,6 +24,17 @@ router.get('/cat-pagamentos', (req, res) => {
    
 })
 
+router.get('/vis-cat-pagamento/:id', (req, res) => {
+    CatPagamento.findOne({_id: req.params.id}).then((catpagamento) => {
+        res.render("admin/vis-cat-pagamento", {catpagamento: catpagamento})
+
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Categoria de pagamento não encontrada!")
+        res.render("admin/cat-pagamentos")
+    })
+})
+
+
 router.get('/cad-cat-pagamento', (req, res) => {
     res.render("admin/cad-cat-pagamento")
 })
