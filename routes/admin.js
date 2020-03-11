@@ -6,15 +6,17 @@ require("../models/CatPagamento")
 const CatPagamento = mongoose.model('catpagamento')
 require("../models/Pagamento")
 const Pagamento = mongoose.model('pagamento')
+require("../models/Usuario")
+const Usuario = mongoose.model('usuario')
 
 router.get('/', (req, res) => {
     //res.send("Página incial do administrativo")
     res.render("admin/index")
 })
 
-// router.get('/pagamentos', (req, res) => {
-//     res.send("Página de pagamentos")
-// })
+router.get('/usuarios', (req, res) => {
+    res.render("admin/usuarios")
+})
 
 router.get('/cat-pagamentos', (req, res) => {
     CatPagamento.find().then((catpagamento) => {
@@ -212,6 +214,20 @@ router.get('/del-pagamento/:id', (req, res) => {
     })
 })
 
+
+router.get('/vis-pagamento/:id', (req, res) => {
+    Pagamento.findOne({_id: req.params.id}).populate("catpagamento").then((pagamento) => {
+        res.render("admin/vis-pagamento", {pagamento: pagamento})
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Pagamento não encontrado!")
+        res.redirect('/admin/pagamentos')
+    })
+})
+
+
+router.get('/cad-usuario', (req, res) => {
+    res.render("admin/cad-usuario")
+})
 
 
 
