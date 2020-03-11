@@ -16,7 +16,13 @@ router.get('/', (req, res) => {
 })
 
 router.get('/usuarios', (req, res) => {
-    res.render("admin/usuarios")
+    Usuario.find().then((usuario) => {
+        res.render("admin/usuarios", { usuarios: usuario })
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Usuário não encontrado!")
+        res.redirect("/admin/usuarios")
+    })
+
 })
 
 router.get('/cad-usuario', (req, res) => {
@@ -63,14 +69,14 @@ router.post('/add-usuario', (req, res) => {
                         if (erro) {
                             req.flash("error_msg", "Error: Não foi possível cadastrar, entre em contato com o administrador!")
                             res.redirect("/admin/cad-usuario")
-                        }else{
+                        } else {
                             addUsuario.senha = hash
                             addUsuario.save().then(() => {
                                 req.flash("success_msg", "Usuário cadastrado com sucesso!")
                                 res.redirect('/admin/usuarios')
                             }).catch((erro) => {
                                 req.flash("error_msg", "Error: Usuário não foi cadastrado com sucesso!")
-                            res.render("admin/cad-usuario")
+                                res.render("admin/cad-usuario")
                             })
                         }
                     })
