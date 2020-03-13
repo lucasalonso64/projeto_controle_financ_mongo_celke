@@ -9,6 +9,7 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
 
+
 //Configurações 
 //Sessão
 app.use(session({

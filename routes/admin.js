@@ -16,13 +16,14 @@ router.get('/', (req, res) => {
 })
 
 router.get('/usuarios', (req, res) => {
-    Usuario.find().then((usuario) => {
+        const {page = 1} = req.query
+    Usuario.paginate({}, { page, limit: 2 }).then((usuario) => {
+        console.log(usuario)
         res.render("admin/usuarios", { usuarios: usuario })
     }).catch((erro) => {
         req.flash("error_msg", "Error: Usuário não encontrado!")
         res.redirect("/admin/usuarios")
     })
-
 })
 
 router.get('/cad-usuario', (req, res) => {
