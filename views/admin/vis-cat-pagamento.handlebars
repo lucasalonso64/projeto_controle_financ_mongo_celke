@@ -8,7 +8,7 @@
                 <span class="d-none d-md-block">
                     <a href="/admin/cat-pagamentos" class="btn btn-outline-info btn-sm">Listar</a>
                     <a href="/admin/edit-cat-pagamento/{{catpagamento._id}}" class="btn btn-outline-warning btn-sm">Editar</a>
-                    <a href="/admin/del-cat-pagamento/{{catpagamento._id}}" class="btn btn-outline-danger btn-sm" >Apagar</a>
+                    <a href="/admin/del-cat-pagamento/{{catpagamento._id}}" class="btn btn-outline-danger btn-sm" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                 </span>
                 <div class="dropdown d-block d-md-none">
                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar"
@@ -19,7 +19,7 @@
                         <a class="dropdown-item" href="/admin/cat-pagamentos">Listar</a>
                         <a class="dropdown-item" href="/admin/edit-cat-pagamento/{{catpagamento._id}}">Editar</a>
                         <a class="dropdown-item" href="/admin/del-cat-pagamento/{{catpagamento._id}}" data-toggle="modal"
-                            data-target="#apagarRegistro">Apagar</a>
+                            data-target="#apagarRegistro" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                     </div>
                 </div>
             </div>

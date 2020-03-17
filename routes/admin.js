@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/usuarios', (req, res) => {
-        const {page = 1} = req.query
+    const { page = 1 } = req.query
     Usuario.paginate({}, { page, limit: 2 }).then((usuario) => {
         console.log(usuario)
         res.render("admin/usuarios", { usuarios: usuario })
@@ -31,6 +31,7 @@ router.get('/cad-usuario', (req, res) => {
 })
 
 router.post('/add-usuario', (req, res) => {
+    var dados_usuario = req.body
     var errors = []
     if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
         errors.push({ error: "Erro: Necessário preencher o campo nome!" })
@@ -52,7 +53,7 @@ router.post('/add-usuario', (req, res) => {
     }
 
     if (errors.length > 0) {
-        res.render("admin/cad-usuario", { errors: errors })
+        res.render("admin/cad-usuario", { errors: errors, usuario: dados_usuario })
     } else {
         Usuario.findOne({ email: req.body.email }).then((usuario) => {
             if (usuario) {
@@ -107,6 +108,16 @@ router.get('/vis-cat-pagamento/:id', (req, res) => {
         res.render("admin/cat-pagamentos")
     })
 })
+
+router.get('/vis-usuario/:id', (req, res) => {
+    Usuario.findOne({ _id: req.params.id }).then((usuario) => {
+        res.render('admin/vis-usuario', { usuario: usuario })
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Usuário não encontrado!")
+        res.redirect("/admin/usuarios")
+    })
+})
+
 
 router.get('/cad-cat-pagamento', (req, res) => {
     res.render("admin/cad-cat-pagamento")
@@ -274,6 +285,65 @@ router.get('/del-pagamento/:id', (req, res) => {
         res.redirect('/admin/pagamentos')
     })
 })
+
+
+router.get('/edit-usuario/:id', (req, res) => {
+    Usuario.findOne({ _id: req.params.id }).then((usuario) => {
+        res.render("admin/edit-usuario", { usuario: usuario })
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Usuário não encontrado!")
+        res.render("admin/usuarios")
+    })
+})
+
+router.post('/update-usuario', (req, res) => {
+    var dados_usuario = req.body
+    var errors = []
+
+    if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
+        errors.push({ error: "Erro: Necessário preencher o campo nome!" })
+    }
+    if (!req.body.email || typeof req.body.email == undefined || req.body.email == null) {
+        errors.push({ error: "Erro: Necessário preencher o campo e-mail!" })
+    }
+    if (errors.length > 0) {
+      //  console.log(dados_usuario)
+        res.render("admin/edit-usuario", {errors: errors, usuario: dados_usuario})
+
+    } else {
+        Usuario.findOne({ _id: req.body._id }).then((usuario) => {
+            usuario.nome = req.body.nome
+            usuario.email = req.body.email
+
+            usuario.save().then(() => {
+                req.flash("success_msg", "Error: Usuário editado com sucesso!")
+                res.redirect("/admin/usuarios")
+
+            }).catch((errors) => {
+                req.flash("error_msg", "Error: Usuário não editado com sucesso!")
+                res.redirect("/admin/usuarios")
+            })
+
+        }).catch((errors) => {
+            req.flash("error_msg", "Error: Usuário não encontrado!")
+            res.redirect("/admin/usuarios")
+        })
+    }
+})
+
+router.get('/del-usuario/:id', (req, res) => {
+    Usuario.deleteOne({ _id: req.params.id}).then(() => {
+        req.flash("success_msg", "Error: Usuário apagado com sucesso!")
+        res.redirect("/admin/usuarios")
+
+    }).catch((erro) => {
+        req.flash("error_msg", "Error: Usuário não apagado!")
+        res.redirect("/admin/usuarios")
+    })
+
+})
+
+
 
 //Exportar o módulo de rotas
 module.exports = router
