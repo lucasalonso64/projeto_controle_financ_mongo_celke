@@ -9,6 +9,7 @@ require("../models/Pagamento")
 const Pagamento = mongoose.model('pagamento')
 require("../models/Usuario")
 const Usuario = mongoose.model('usuario')
+const passport = require('passport')
 
 router.get('/', (req, res) => {
     //res.send("Página incial do administrativo")
@@ -341,6 +342,10 @@ router.get('/del-usuario/:id', (req, res) => {
         res.redirect("/admin/usuarios")
     })
 
+})
+
+router.get('/login', (req, res) => {
+    res.render("admin/login")
 })
 
 
