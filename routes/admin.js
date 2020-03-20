@@ -348,6 +348,14 @@ router.get('/login', (req, res) => {
     res.render("admin/login")
 })
 
+router.post('/login', (req, res, next) =>{
+    passport.authenticate("local", {
+        successRedirect: "/admin/",
+        failureRedirect: "/admin/login",
+        failureFlash: true
+    })(req, res, next)
+})
+
 
 
 //Exportar o módulo de rotas

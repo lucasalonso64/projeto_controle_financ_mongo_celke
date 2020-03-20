@@ -6,22 +6,20 @@ const Usuario = mongoose.model('usuario')
 
 module.exports = function (passport) {
     passport.use(new localStrategy({ usernameField: 'email', passwordField: 'senha' }, (email, senha, done) => {
-        usuario.findOne({ email: email }).then((usuario) => {
+        Usuario.findOne({ email: email }).then((usuario) => {
             if (!usuario) {
-                return done(null, false, { message: "cadastro com este e-mail não encontrado" })
+                return done(null, false, { message: "Cadastro com este e-mail não encontrado!" })
             }
+
             bcryptjs.compare(senha, usuario.senha, (erro, correta) => {
                 if (correta) {
                     return done(null, usuario)
                 } else {
                     return done(null, false, { message: "Dados de acesso incorretos!" })
                 }
-            }
-            )
-
+            })
         })
     }))
-
 
     //Salvar os dados do usuário na sessão
     passport.serializeUser((usuario, done) => {
@@ -30,7 +28,6 @@ module.exports = function (passport) {
     passport.deserializeUser((id, done) => {
         Usuario.findById(id, (erro, usuario) => {
             done(erro, usuario)
-            
         })
     })
 
