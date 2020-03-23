@@ -17,9 +17,10 @@ app.use(session({
     secret: 'celkeonesession',
     resave: true,
     saveUninitialized: true
-  }))
-  app.use(passport.initialize())
-  app.use(passport.session())
+}))
+//Passport
+app.use(passport.initialize())
+app.use(passport.session())
 //Flash
 app.use(flash())
 
@@ -39,8 +40,6 @@ app.use(bodyParser.json())
 //Handlebars
 app.engine('handlebars', handlebars({ defaultLayout: "main" }))
 app.set("view engine", 'handlebars')
-
-
 
 //Conexão com banco de dados
 mongoose.connect('mongodb://localhost/celke', {

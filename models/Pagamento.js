@@ -1,24 +1,27 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const Schema = mongoose.Schema
 
 const Pagamento = new Schema({
     nome: {
         type: String,
-        require: true
-    },
+        required: true
+    }, 
     valor: {
         type: Number,
-        require: true
+        required: true
     },
     catpagamento: {
         type: Schema.Types.ObjectId,
         ref: "catpagamento",
-        require: true
+        required: true
     },
     created: {
         type: Date,
         default: Date.now()
     }
 })
+
+Pagamento.plugin(mongoosePaginate)
 
 mongoose.model("pagamento", Pagamento)

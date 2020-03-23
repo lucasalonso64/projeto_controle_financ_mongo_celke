@@ -7,10 +7,8 @@
             <div class="p-2">
                 <span class="d-none d-md-block">
                     <a href="/admin/cat-pagamentos" class="btn btn-outline-info btn-sm">Listar</a>
-                    <a href="/admin/vis-cat-pagamento/{{catpagamento._id}}"
-                        class="btn btn-outline-primary btn-sm">Visualizar</a>
-                    <a href="/admin/del-cat-pagamento/{{catpagamento._id}}"
-                        class="btn btn-outline-danger btn-sm">Apagar</a>
+                    <a href="/admin/vis-cat-pagamento/{{catpagamento._id}}" class="btn btn-outline-primary btn-sm">Visualizar</a>
+                    <a href="/admin/del-cat-pagamento/{{catpagamento._id}}" class="btn btn-outline-danger btn-sm" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                 </span>
                 <div class="dropdown d-block d-md-none">
                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar"
@@ -21,7 +19,7 @@
                         <a class="dropdown-item" href="/admin/cat-pagamentos">Listar</a>
                         <a class="dropdown-item" href="/admin/vis-cat-pagamento/{{catpagamento._id}}">Visualizar</a>
                         <a class="dropdown-item" href="/admin/del-cat-pagamento/{{catpagamento._id}}"
-                            data-toggle="modal" data-target="#apagarRegistro">Apagar</a>
+                            data-toggle="modal" data-target="#apagarRegistro" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +27,7 @@
         {{>_msg}}
         <hr>
         <form action="/admin/update-cat-pagamento" method="POST">
-            <input type="hidden" name="id" value="{{catpagamento._id}}">
+            <input type="hidden" name="_id" value="{{catpagamento._id}}">
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label><span class="text-danger">*</span> Nome</label>
@@ -41,7 +39,7 @@
             <p>
                 <span class="text-danger">* </span>Campo obrigatório
             </p>
-            <button type="submit" class="btn btn-success">Salvar</button>
+            <button type="submit" class="btn btn-warning">Salvar</button>
         </form>
     </div>
 </div>

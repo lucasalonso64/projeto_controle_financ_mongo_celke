@@ -7,10 +7,8 @@
             <div class="p-2">
                 <span class="d-none d-md-block">
                     <a href="/admin/pagamentos" class="btn btn-outline-info btn-sm">Listar</a>
-                    <a href="/admin/vis-pagamento/{{pagamento._id}}"
-                        class="btn btn-outline-primary btn-sm">Visualizar</a>
-                    <a href="/admin/del-pagamento/{{pagamento._id}}"
-                        class="btn btn-outline-danger btn-sm">Apagar</a>
+                    <a href="/admin/vis-pagamento/{{pagamento._id}}" class="btn btn-outline-primary btn-sm">Visualizar</a>
+                    <a href="/admin/del-pagamento/{{pagamento._id}}" class="btn btn-outline-danger btn-sm" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                 </span>
                 <div class="dropdown d-block d-md-none">
                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="acoesListar"
@@ -20,7 +18,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="acoesListar">
                         <a class="dropdown-item" href="/admin/pagamentos">Listar</a>
                         <a class="dropdown-item" href="/admin/vis-pagamento/{{pagamento._id}}">Visualizar</a>
-                        <a class="dropdown-item" href="/admin/del-pagamento/{{pagamento._id}}">Apagar</a>
+                        <a class="dropdown-item" href="/admin/del-pagamento/{{pagamento._id}}" data-confirm="Tem certeza de que deseja excluir o item o selecionando">Apagar</a>
                     </div>
                 </div>
             </div>
@@ -28,7 +26,7 @@
         {{>_msg}}
         <hr>
         <form action="/admin/update-pagamento" method="POST">
-            <input type="hidden" name="id" value="{{pagamento._id}}"
+            <input type="hidden" name="_id" value="{{pagamento._id}}">
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label><span class="text-danger">*</span> Nome</label>
@@ -48,9 +46,9 @@
                     <select name="catpagamento" id="catpagamento" class="form-control">
                         <option value="{{pagamento.catpagamento._id}}">{{pagamento.catpagamento.nome}}</option>
                         {{#each catpagamentos}}
-                        <option value="{{_id}}">{{nome}}</option>
+                            <option value="{{_id}}">{{nome}}</option>
                         {{else}}
-                        <option value="">Nenhuma Categoria de pagamento encontrado</option>
+                            <option value="">Nenhuma Categoria de pagamento encontrado</option>
                         {{/each}}
                     </select>
                 </div>
